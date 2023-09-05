@@ -1,6 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Roboto&display=swap");
 :root {
-  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
-    Helvetica Neue, sans-serif;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, Helvetica Neue,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   --bg-color: #f3f4f6;
   --text-700: #374151;
