@@ -1,21 +1,15 @@
-import { useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import useFetch from "../../hooks/useFetch";
+import { Link } from "react-router-dom";
+import { useHotels } from "../context/HotelProvider";
 
 const Hotels = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const destination = searchParams.get("destination");
-  const room = JSON.parse(searchParams.get("options"))?.room;
-  const { data, isLoading } = useFetch(
-    "http://localhost:5000/hotels",
-    `name_like=${destination || ""}&accommodates_gte=${room || 1}`
-  );
+  const { isLoading, hotels } = useHotels();
+
   if (isLoading) return <p>loading...</p>;
 
   return (
     <div className="searchList">
-      <h2>Search Result ({data.length})</h2>
-      {data.map((item) => {
+      <h2>Search Result ({hotels.length})</h2>
+      {hotels.map((item) => {
         return (
           <Link
             key={item.id}
