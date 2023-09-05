@@ -13,7 +13,10 @@ import {
 } from "react-router-dom";
 
 function Header() {
-  const [destination, setDestination] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [destination, setDestination] = useState(
+    searchParams.get("destination") || ""
+  );
   const [showOption, setShowOption] = useState(false);
   const [options, setoptions] = useState({
     adult: 1,
