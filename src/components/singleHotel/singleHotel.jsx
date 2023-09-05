@@ -7,6 +7,9 @@ const SingleHotelView = () => {
     ""
   );
   if (isLoading) return <p>loading...</p>;
+
+  console.log(data.xl_picture_url);
+
   return (
     <div className="room">
       <div className="roomDetail">
@@ -14,7 +17,7 @@ const SingleHotelView = () => {
         <div>
           {data.number_of_reviews} reviews &bull; {data.smart_location}
         </div>
-        <img src={data.picture_url.url} alt={data.name} />
+        <img src={data.xl_picture_url} alt={data.name} />
       </div>
     </div>
   );
