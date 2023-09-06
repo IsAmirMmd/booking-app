@@ -1368,6 +1368,60 @@
       "longitude": "67.78003711374224",
       "host_location": "Baba Kot Pakistan",
       "id": 8
+    },
+    {
+      "cityName": "Akkistau",
+      "country": "Kazakhstan",
+      "countryCode": "KZ",
+      "latitude": "47.697747261516",
+      "longitude": "49.96582031250001",
+      "host_location": "Akkistau Kazakhstan",
+      "id": 9
+    },
+    {
+      "cityName": "Akkistau",
+      "country": "Kazakhstan",
+      "countryCode": "KZ",
+      "latitude": "47.697747261516",
+      "longitude": "49.96582031250001",
+      "host_location": "Akkistau Kazakhstan",
+      "id": 10
+    },
+    {
+      "cityName": "Akkistau",
+      "country": "Kazakhstan",
+      "countryCode": "KZ",
+      "latitude": "47.697747261516",
+      "longitude": "49.96582031250001",
+      "host_location": "Akkistau Kazakhstan",
+      "id": 11
+    },
+    {
+      "cityName": "Akkistau",
+      "country": "Kazakhstan",
+      "countryCode": "KZ",
+      "latitude": "47.697747261516",
+      "longitude": "49.96582031250001",
+      "host_location": "Akkistau Kazakhstan",
+      "id": 12
+    },
+    {
+      "cityName": "Akkistau",
+      "country": "Kazakhstan",
+      "countryCode": "KZ",
+      "latitude": "47.90086549801381",
+      "longitude": "50.07156372070313",
+      "host_location": "Akkistau Kazakhstan",
+      "id": 13
+    },
+    {
+      "cityName": "Longyearbyen",
+      "country": "Norway",
+      "countryCode": "NO",
+      "latitude": "79.44445301629949",
+      "longitude": "16.875000000000004",
+      "host_location": "Longyearbyen Norway",
+      "id": 14
     }
   ]
 }

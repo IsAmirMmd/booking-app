@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { createContext } from "react";
 import useFetch from "../../hooks/useFetch";
@@ -10,9 +10,26 @@ const BookmarkContext = createContext();
 const BookmarkProvider = ({ children }) => {
   const [currentBookmark, setCurrentBookmark] = useState({});
   const [isLoadingCurr, setIsLoadingCurr] = useState(false);
-  const { data: bookmarks, isLoading } = useFetch(
-    "http://localhost:5000/bookmarks"
-  );
+  const [bookmarks, setBookmarks] = useState([]);
+
+  const { data, isLoading } = useFetch("http://localhost:5000/bookmarks");
+
+  useEffect(() => {
+    async function getBookmarks() {
+      setIsLoadingCurr(true);
+      try {
+        const { data } = await axios.get(`http://localhost:5000/bookmarks`);
+        setBookmarks(data);
+      } catch (error) {
+        console.error(error);
+        toast.error(error.message);
+      } finally {
+        setIsLoadingCurr(false);
+      }
+    }
+    getBookmarks();
+  }, []);
+
   async function getBookmark(id) {
     setIsLoadingCurr(true);
     try {
@@ -25,6 +42,22 @@ const BookmarkProvider = ({ children }) => {
       setIsLoadingCurr(false);
     }
   }
+
+  async function createBookmark(newBookmark) {
+    setIsLoadingCurr(true);
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/bookmarks",
+        newBookmark
+      );
+      setCurrentBookmark(data);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsLoadingCurr(false);
+    }
+  }
+
   return (
     <BookmarkContext.Provider
       value={{
@@ -33,6 +66,8 @@ const BookmarkProvider = ({ children }) => {
         getBookmark,
         currentBookmark,
         isLoadingCurr,
+        createBookmark,
+        setBookmarks,
       }}
     >
       {children}
