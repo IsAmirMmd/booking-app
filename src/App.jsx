@@ -10,6 +10,7 @@ import SingleHotelView from "./components/singleHotel/singleHotel";
 import BookMark from "./components/bookmark/Bookmark";
 import BookmarkProvider from "./components/context/BookmarkProvider";
 import BookMarkList from "./components/BookmarkList/BookmarkList";
+import SingleBookmark from "./components/singleBookmark/singleBookmark";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           </Route>
           <Route path="/bookmark" element={<BookMark />}>
             <Route index element={<BookMarkList />} />
+            <Route path=":id" element={<SingleBookmark />} />
             <Route path="add" element={<SingleHotelView />} />
           </Route>
         </Routes>
