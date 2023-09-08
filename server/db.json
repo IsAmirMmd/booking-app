@@ -1341,6 +1341,15 @@
       "longitude": "-4.111633300781251",
       "host_location": "Segovia Spain",
       "id": 15
+    },
+    {
+      "cityName": "Chora",
+      "country": "Afghanistan",
+      "countryCode": "AF",
+      "latitude": "32.486596829360515",
+      "longitude": "66.26953125000001",
+      "host_location": "Chora Afghanistan",
+      "id": 17
     }
   ]
 }

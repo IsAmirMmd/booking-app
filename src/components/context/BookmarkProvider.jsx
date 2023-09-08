@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+/* eslint-disable no-fallthrough */
+import { useContext, useEffect, useReducer, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { createContext } from "react";
 import useFetch from "../../hooks/useFetch";
@@ -7,65 +8,108 @@ import { toast } from "react-hot-toast";
 
 const BookmarkContext = createContext();
 
-const BookmarkProvider = ({ children }) => {
-  const [currentBookmark, setCurrentBookmark] = useState({});
-  const [isLoadingCurr, setIsLoadingCurr] = useState(false);
-  const [bookmarks, setBookmarks] = useState([]);
+const initialState = {
+  bookmarks: [],
+  isLoading: false,
+  currentBookmark: {},
+  error: "",
+};
 
-  const { data, isLoading } = useFetch("http://localhost:5000/bookmarks");
+function bookmarkReducer(state, action) {
+  switch (action.type) {
+    case "LOADING":
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case "bookmarks/loaded":
+      return {
+        ...state,
+        isLoading: false,
+        bookmarks: action.payload,
+      };
+    case "bookmark/created":
+      return {
+        ...state,
+        isLoading: false,
+        bookmarks: [...state.bookmarks, action.payload],
+        currentBookmark: action.payload,
+      };
+    case "bookmark/loaded":
+      return {
+        ...state,
+        isLoading: false,
+        currentBookmark: action.payload,
+      };
+    case "bookmark/deleted":
+      return {
+        ...state,
+        isLoading: false,
+        bookmarks: state.bookmarks.filter((item) => item.id !== action.payload),
+      };
+    case "REJECT":
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+    default:
+      throw new Error("Unknown Action");
+  }
+}
+
+const BookmarkProvider = ({ children }) => {
+  const [{ bookmarks, isLoading, currentBookmark }, dispatch] = useReducer(
+    bookmarkReducer,
+    initialState
+  );
 
   useEffect(() => {
     async function getBookmarks() {
-      setIsLoadingCurr(true);
+      dispatch({ type: "LOADING" });
       try {
         const { data } = await axios.get(`http://localhost:5000/bookmarks`);
-        setBookmarks(data);
+        dispatch({ type: "bookmarks/loaded", payload: data });
       } catch (error) {
-        console.error(error);
+        dispatch({ type: "REJECT", payload: "an Error ..." });
         toast.error(error.message);
-      } finally {
-        setIsLoadingCurr(false);
       }
     }
     getBookmarks();
   }, []);
 
   async function getBookmark(id) {
-    setIsLoadingCurr(true);
+    dispatch({ type: "LOADING" });
     try {
       const { data } = await axios.get(`http://localhost:5000/bookmarks/${id}`);
-      setCurrentBookmark(data);
+      dispatch({ type: "bookmark/loaded", payload: data });
     } catch (error) {
-      console.error(error);
+      dispatch({ type: "REJECT", payload: "an Error ..." });
       toast.error(error.message);
-    } finally {
-      setIsLoadingCurr(false);
     }
   }
 
   async function createBookmark(newBookmark) {
-    setIsLoadingCurr(true);
+    dispatch({ type: "LOADING" });
     try {
       const { data } = await axios.post(
         "http://localhost:5000/bookmarks",
         newBookmark
       );
-      setCurrentBookmark(data);
+      dispatch({ type: "bookmark/created", payload: data });
     } catch (error) {
+      dispatch({ type: "REJECT", payload: "an Error ..." });
       toast.error(error.message);
-    } finally {
-      setIsLoadingCurr(false);
     }
   }
   async function removeBookmark(bookmarkId) {
-    setIsLoadingCurr(true);
+    dispatch({ type: "LOADING" });
     try {
       await axios.delete(`http://localhost:5000/bookmarks/${bookmarkId}`);
-      setBookmarks((prev) => prev.filter((item) => item.id !== bookmarkId));
+      dispatch({ type: "bookmark/deleted", payload: bookmarkId });
     } catch (error) {
+      dispatch({ type: "REJECT", payload: "an Error ..." });
       toast.error(error.message);
-    } finally {
-      setIsLoadingCurr(false);
     }
   }
 
@@ -76,9 +120,7 @@ const BookmarkProvider = ({ children }) => {
         isLoading,
         getBookmark,
         currentBookmark,
-        isLoadingCurr,
         createBookmark,
-        setBookmarks,
         removeBookmark,
       }}
     >

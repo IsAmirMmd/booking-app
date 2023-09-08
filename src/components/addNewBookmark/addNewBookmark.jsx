@@ -33,7 +33,6 @@ const AddNewBookmark = () => {
     };
 
     await createBookmark(newBookmark);
-    setBookmarks((prev) => [...prev, newBookmark]);
     navigate("/bookmark");
   };
 
