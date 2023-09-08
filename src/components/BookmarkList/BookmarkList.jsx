@@ -1,9 +1,15 @@
 import { Link } from "react-router-dom";
 import { useBookmark } from "../context/BookmarkProvider";
 import ReactCountryFlag from "react-country-flag";
+import { HiTrash } from "react-icons/hi";
 
 const BookMarkList = () => {
-  const { bookmarks, currentBookmark } = useBookmark();
+  const { bookmarks, currentBookmark, removeBookmark } = useBookmark();
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    removeBookmark(id);
+  };
+
   return (
     <div>
       <h2>Your bookmarks ({bookmarks.length})</h2>
@@ -22,6 +28,9 @@ const BookMarkList = () => {
                 <ReactCountryFlag svg countryCode={item.countryCode} />
                 &nbsp;<strong>{item.cityName}</strong> &nbsp;
                 <span>{item.country}</span>
+                <button onClick={(e) => handleDelete(e, item.id)}>
+                  <HiTrash className="trash" />
+                </button>
               </div>
             </Link>
           );
