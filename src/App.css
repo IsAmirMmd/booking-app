@@ -4,18 +4,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   gap: 1rem;
 }
+
 .headerSearch {
   display: flex;
   width: 100%;
   max-width: 900px;
   justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
+  align-items: start;
+  flex-direction: column;
+  gap: 1.5rem;
   border: 1px solid #ebe9e9;
   border-radius: 1.5rem;
   padding: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .header {
+    flex-direction: row;
+  }
+  .headerSearch {
+    gap: 0.5rem;
+    flex-direction: row;
+    align-items: center;
+  }
 }
 
 .headerSearchInput {
@@ -28,12 +42,19 @@
   position: relative;
 }
 .headerSearchItem .seperator {
-  display: inline-block;
+  display: none;
   width: 1px;
   height: 30px;
   background-color: var(--text-400);
   margin: 0 1rem;
 }
+
+@media screen and (min-width: 768px) {
+  .headerSearchItem .seperator {
+    display: inline-block;
+  }
+}
+
 .textField {
   padding: 0.7rem 1rem;
   border-radius: 0.5rem;
@@ -55,6 +76,7 @@
   border: 1px solid var(--text-100);
   position: absolute;
   top: 2rem;
+  left: -1rem;
   width: 220px;
   z-index: 1000;
 }
@@ -92,8 +114,14 @@
 .date {
   position: absolute;
   top: 50px;
-  left: -5rem;
+  left: 0;
   z-index: 1002;
+}
+
+@media screen and (min-width: 768px) {
+  .date {
+    left: -5rem;
+  }
 }
 
 .dateIcon {
